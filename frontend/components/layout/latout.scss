@@ -1,0 +1,185 @@
+/* MAIN LAYOUT */
+.app-shell {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ------------------------------
+   SIDEBAR (Glassmorphism)
+--------------------------------*/
+.sidebar {
+    width: 180px;
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    animation: fadeInSidebar 0.7s ease;
+}
+
+@keyframes fadeInSidebar {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Logo */
+.logo-area {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.logo-gradient {
+    background: linear-gradient(90deg, #9e00ff, #5b35ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Menu Items */
+.menu-item {
+    color: #eee;
+    cursor: pointer;
+    border-radius: 10px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+    padding: 12px 6px;
+    font-size: 12px;
+    transition: all .25s;
+    display: flex;
+    position: relative;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+
+
+    fv .icon {
+        font-size: 18px;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.06);
+        transform: translateX(4px);
+    }
+}
+
+/* Active menu pill indicator */
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-weight: 600;
+}
+
+.active-pill {
+    position: absolute;
+    right: -10px;
+    width: 6px;
+    height: 70%;
+    border-radius: 0 4px 4px 0;
+    background: linear-gradient(180deg, #ae68ff, #6b3bff);
+    animation: pillIn 0.4s ease forwards;
+}
+
+@keyframes pillIn {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+
+    to {
+        height: 70%;
+        opacity: 1;
+    }
+}
+
+/* Footer */
+.sidebar-footer {
+    .footer-item {
+        color: #ddd;
+        cursor: pointer;
+        border-radius: 8px;
+        align-items: center;
+        gap: 12px;
+        padding: 10px;
+        display: flex;
+        font-size: 12px;
+        font-weight: 600;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+    }
+
+    .logout {
+        margin-top: 10px;
+        color: #ffb3b3;
+    }
+}
+
+/* ------------------------------
+   TOPBAR
+--------------------------------*/
+.topbar {
+    height: 70px;
+    background: #ffffffcc;
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .badge {
+        background: #5b0fff;
+        color: #fff;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .name {
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .email {
+        margin: 0;
+        font-size: 13px;
+        opacity: 0.6;
+    }
+}
+
+/* MAIN PAGE CONTENT */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-content {
+    padding: 32px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.menu-item {}
