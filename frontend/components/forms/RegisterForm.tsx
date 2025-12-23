@@ -3,82 +3,91 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
 import Input from "../ui/Input";
 
-
-export default function RegisterForm() {
-  const router = useRouter();
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(true);
 
   return (
-    <div className="w-full max-w-3xl px-8">
-  
-      <div className="flex items-center justify-between py-2">
-        <img
-          src="/Images/brand-logo.svg"
-          alt="Brand Logo"
-          className="group-data-[state=collapsed]:hidden"
-        />
-      </div>
+      <div className="w-full max-w-xl rounded-3xl border border-white/40 bg-white/70 backdrop-blur-xl shadow-[0_20px_50px_rgba(82,36,99,0.25)] p-8 space-y-8">
+      <div className="text-center space-y-3">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#522463] to-[#B843E2] bg-clip-text text-transparent">
+            Register
+          </h1>
+          <p className="text-gray-600">
+            Already have an account?{" "}
+            <Link
+              href="/auth/login"
+              className="font-medium text-[#B843E2] hover:underline"
+            >
+              Login
+            </Link>
+          </p>
+        </div>
+        <div className="space-y-6">
 
-
-      <div className="h-[790px] flex items-center justify-center">
-        <div className="w-[770px] space-y-8 p-4">
-          <div className="text-center space-y-4">
-            <h1 className="text-6xl font-semibold mb-5">Register</h1>
-            <p className="text-2xl">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="text-[#B843E2] underline">
-                Login
-              </Link>
-            </p>
-          </div>
-
-          <div className="space-y-10">
-            {/* Email */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Email"
-              type="email"
-              placeholder="Enter your email"
-              className="h-[72px] rounded-xl shadow-xl"
+              label="First Name"
+              type="text"
+              placeholder="Enter first name"
+              className="rounded-xl shadow-sm focus:ring-2 focus:ring-[#B843E2]"
             />
-
-            {/* Password */}
-            <div className="relative">
-              <Input
-                label="Password"
-                type={showPassword ? "password" : "text"}
-                placeholder="Enter your password"
-                className="h-[72px] rounded-xl shadow-xl pr-10"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(prev => !prev)}
-                className="absolute right-3 top-[38px] text-gray-500 hover:text-gray-700"
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
-            </div>
-
-            {/* Submit Button */}
-             <button
-          type="submit"
-          className="
-            mt-2 w-full rounded-xl
-            bg-[#522463] text-white font-medium
-            py-2.5 text-sm
-            shadow-[0_10px_25px_rgba(82,36,99,0.35)]
-            hover:bg-[#3f1b4c] transition
-          "
-        >
-          Create account
-        </button>
+            <Input
+              label="Last Name"
+              type="text"
+              placeholder="Enter last name"
+              className="rounded-xl shadow-sm focus:ring-2 focus:ring-[#B843E2]"
+            />
           </div>
+
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+            className="rounded-xl shadow-sm focus:ring-2 focus:ring-[#B843E2]"
+          />
+
+          <Input
+            label="User"
+            type="text"
+            placeholder="Enter user type (eg: admin, user)"
+            className="rounded-xl shadow-sm focus:ring-2 focus:ring-[#B843E2]"
+          />
+
+          <div className="relative">
+            <Input
+              label="Password"
+              type={showPassword ? "password" : "text"}
+              placeholder="Create a password"
+              className="rounded-xl shadow-sm pr-12 focus:ring-2 focus:ring-[#B843E2]"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(prev => !prev)}
+              className="absolute right-4 top-[25px] text-gray-400 hover:text-[#522463]"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="
+              w-full rounded-xl py-3 font-semibold text-white
+              bg-gradient-to-r from-[#522463] to-[#B843E2]
+              shadow-[0_12px_30px_rgba(184,67,226,0.45)]
+              hover:scale-[1.02]
+              transition-all duration-300
+            "
+          >
+            Create Account
+          </button>
         </div>
       </div>
-    </div>
+   
   );
-}
+};
+
+export default RegisterForm;
