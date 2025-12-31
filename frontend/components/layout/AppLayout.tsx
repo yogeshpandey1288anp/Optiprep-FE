@@ -1,36 +1,43 @@
 "use client";
 
-import Sidebar from "@/components/Layout/Sidebar";
-import Topbar from "@/components/Layout/Topbar";
+import SideBar from "@/components/layout/SideBar";
+import Topbar from "@/components/layout/Topbar";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100vh; /* 🔥 lock viewport */
+  overflow: hidden; /* prevent body scroll */
 `;
+
 const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
 `;
 
-const LayoutWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  background: ${({ theme }) => theme.background};
+/* 🔥 Topbar height assumption */
+const TOPBAR_HEIGHT = 64;
+
+const Main = styled.main`
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto; /* 🔥 page scroll */
+  height: calc(100vh - ${TOPBAR_HEIGHT}px);
 `;
 
 export default function AppLayout({ children }) {
   return (
     <Wrapper>
-      <Sidebar />
+      <SideBar />
+
       <Content>
         <Topbar />
-        <main style={{ padding: "24px" }}>{children}</main>
+
+        {/* 🔥 height-calculated content */}
+        <Main>{children}</Main>
       </Content>
     </Wrapper>
   );
