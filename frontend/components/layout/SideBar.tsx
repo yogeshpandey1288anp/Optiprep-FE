@@ -13,8 +13,8 @@ import {
   FiChevronRight
 } from "react-icons/fi";
 import Image from "next/image";
-import logo from "@/public/Images/innerlogo.png";
-// import { logoutUser } from "";
+import logo from "@/public/images/Logo.png";
+import { logoutUser } from "@/app/lib/api";
 
 // ---------------- Styled Components ----------------
 
@@ -59,9 +59,8 @@ const MiddleSection = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   gap: 14px;
-  margin-top: 20px;
 `;
 
 const MenuItem = styled.div<{ $active?: boolean; $collapsed: boolean }>`
@@ -104,19 +103,19 @@ export default function Sidebar() {
   const { collapsed, toggleSidebar } = useSidebar();
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("authToken");
-    // if (token) await logoutUser(token);
+  const token = localStorage.getItem("authToken");
+  if (token) await logoutUser(token);
 
-    localStorage.removeItem("authToken");
-    window.location.href = "/auth/login";
-  };
+  localStorage.removeItem("authToken");
+  window.location.href = "/auth/login";
+};
 
 
-  const getDashboard = () => {
+ const getDashboard = () => {
     window.location.href = "/main/dashboard";
   };
 
-  const getHistory = () => {
+const getHistory = () => {
     window.location.href = "/main/history";
   };
 
@@ -135,7 +134,7 @@ export default function Sidebar() {
 
       <MiddleSection>
         <MenuItem $active $collapsed={collapsed}
-          onClick={getDashboard}>
+        onClick={getDashboard}>
           <FiHome size={20} />
           <span>Dashboard</span>
         </MenuItem>
@@ -151,8 +150,8 @@ export default function Sidebar() {
         </MenuItem>
 
         <MenuItem $collapsed={collapsed}
-
-          onClick={getHistory}>
+        
+        onClick={getHistory}>
           <FiFileText size={20} />
           <span>History</span>
         </MenuItem>
@@ -165,7 +164,7 @@ export default function Sidebar() {
         </MenuItem>
 
         <MenuItem $collapsed={collapsed}
-          onClick={handleLogout}>
+        onClick={handleLogout}>
           <FiLogOut size={20} />
           <span>Logout</span>
         </MenuItem>

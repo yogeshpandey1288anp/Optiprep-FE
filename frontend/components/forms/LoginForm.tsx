@@ -11,7 +11,7 @@ const LoginForm = () => {
   return (
    <div className="w-full max-w-xl rounded-3xl border border-white/40 bg-white/70 backdrop-blur-xl shadow-[0_20px_50px_rgba(82,36,99,0.25)] p-8 space-y-8">
       <div className="text-center space-y-3">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#522463] to-[#B843E2] bg-clip-text text-transparent lh-normal">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#522463] to-[#B843E2] bg-clip-text text-transparent">
          Login
         </h1>
         <p className="text-gray-600">
