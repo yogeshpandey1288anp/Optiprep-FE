@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 import { FiBell, FiMoon, FiSun } from "react-icons/fi";
-import { useThemeMode } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 
 import { useEffect, useState } from "react";
 
@@ -70,17 +70,10 @@ const UserInfo = styled.div`
 `;
 
 export default function Topbar() {
-  const { mode, toggleTheme } = useThemeMode();
+  const { mode, toggleTheme } = useTheme();
   const  [user, setUser] = useState<{first_name: string; last_name:string; email: string} | null>(null);
 
-
-useEffect(() => {
-const token = localStorage.getItem("authToken");
-  console.log("TOKEN FROM STORAGE:", token);
-  if (!token) return;
-  getUserProfile(token).then(setUser).catch(console.error);
-}, []);
-
+  
 const initials =
   user
     ? `${user.first_name[0]}${user.last_name[0]}`.toUpperCase()
