@@ -1,6 +1,5 @@
 from datetime import datetime
-from bson import ObjectId
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 
 class DocumentModel:
@@ -9,8 +8,8 @@ class DocumentModel:
         mdr_document_id: str,
         document_name: str,
         document_type: str,
-        content: str = None,
-        metadata: Dict[str, Any] = None,
+        content: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None,
     ):
         self.mdr_document_id = mdr_document_id
         self.document_name = document_name
@@ -21,7 +20,7 @@ class DocumentModel:
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "mdr_document_id": self.mdr_document_id,
             "document_name": self.document_name,
