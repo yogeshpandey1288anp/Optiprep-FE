@@ -28,3 +28,8 @@ async def fetch_directory(external_case_id: str):
     if not record:
         raise HTTPException(status_code=404, detail="Record not found")
     return record
+
+
+
+    
+    # id: str   jfjhfejfjefjejejfeiereefe
