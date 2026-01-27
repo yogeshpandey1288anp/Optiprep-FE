@@ -13,8 +13,8 @@ import {
   FiChevronRight
 } from "react-icons/fi";
 import Image from "next/image";
-import logo from "@/public/Images/innerlogo.png";
-// import { logoutUser } from "";
+import logo from "@/public/images/Logo.png";
+// import { logoutUser } from "@/app/lib/api";
 
 // ---------------- Styled Components ----------------
 
