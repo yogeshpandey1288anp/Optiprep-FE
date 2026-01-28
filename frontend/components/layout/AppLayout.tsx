@@ -36,7 +36,6 @@ export default function AppLayout({ children }) {
       <Content>
         <Topbar />
 
-        {/* 🔥 height-calculated content */}
         <Main>{children}</Main>
       </Content>
     </Wrapper>
