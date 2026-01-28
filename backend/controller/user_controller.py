@@ -24,8 +24,8 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
 async def get_me(current_user=Depends(get_current_user)):
     return UserResponse(
         id=str(current_user["_id"]),
-        first_name=current_user["first_name"],
-        last_name=current_user["last_name"],
+        firstname=current_user["firstname"],
+        lastname=current_user["lastname"],
         email=current_user["email"],
         role=current_user["role"],
         created_at=current_user["created_at"],

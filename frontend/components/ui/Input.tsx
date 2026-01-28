@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 type InputProps = {
   label: string;
+  name: string;
   type?: string;
   placeholder?: string;
   value?: string;
@@ -14,6 +15,7 @@ type InputProps = {
 
 export default function Input({
   label,
+  name,
   type = "text",
   placeholder,
   value,
@@ -28,6 +30,7 @@ export default function Input({
 
       <input
         type={type}
+        name={name}
         placeholder={placeholder || label}
         value={value}
         onChange={onChange}

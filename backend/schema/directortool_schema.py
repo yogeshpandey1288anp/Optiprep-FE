@@ -6,6 +6,9 @@ from decimal import Decimal
 from typing_extensions import Literal
 
 
+# ---------- ENUMS ----------
+
+
 class EmploymentStatus(str, Enum):
     employed = "employed"
     unemployed = "unemployed"
@@ -28,6 +31,7 @@ class InterestRateType(str, Enum):
     variable = "variable"
 
 
+# ---------- NESTED MODELS ----------
 
 
 class BorrowerDetails(BaseModel):
@@ -39,18 +43,18 @@ class BorrowerDetails(BaseModel):
     zip_code: str
     borrower_type: BorrowerType
     employment_status: EmploymentStatus
-    company_name: Optional[str]
+    company_name: Optional[str] = None
     monthly_income_range: str
 
 
 class LoanAccountDetails(BaseModel):
     external_loan_account_id: str
     loan_number: str
-    outstanding_principal: Decimal
+    outstanding_principal: Decimal = Field(..., gt=0)
     interest_rate_type: InterestRateType
-    escrow_balance: Decimal
+    escrow_balance: Decimal = Field(..., ge=0)
     loan_type: str
-    delinquency_days: int
+    delinquency_days: int = Field(..., ge=0)
     next_payment_due_date: datetime
     current_payment_status: CurrentPaymentStatus
 
@@ -58,7 +62,7 @@ class LoanAccountDetails(BaseModel):
 class PropertyDetails(BaseModel):
     external_property_id: str
     property_address: str
-    property_value: Decimal
+    property_value: Decimal = Field(..., gt=0)
     property_condition: str
     occupancy_type: str
     investor_insure_type: str
@@ -70,7 +74,7 @@ class PaymentBehavior(BaseModel):
     last_payment_date: datetime
     payment_pattern: str
     forbearance_history: str
-    late_fees_accrued: Decimal
+    late_fees_accrued: Decimal = Field(..., ge=0)
     payment_method: str
 
 
@@ -78,12 +82,15 @@ class FinancialHardship(BaseModel):
     financial_hardship_id: str
     hardship_reason: str
     hardship_start_date: datetime
-    hardship_duration_months: int
-    income_reduction_percentage: Decimal
-    supporting_documents: Optional[str]
+    hardship_duration_months: int = Field(..., ge=0)
+    income_reduction_percentage: Decimal = Field(..., ge=0, le=100)
+    supporting_documents: Optional[str] = None
     borrower_explanation: str
     assistance_type_required: str
     eligibility_status: str
+
+
+# ---------- MAIN SCHEMAS ----------
 
 
 class BorrowerDirectoryCreate(BaseModel):
@@ -92,7 +99,7 @@ class BorrowerDirectoryCreate(BaseModel):
     loan_account: LoanAccountDetails
     property: PropertyDetails
     payment_behavior: PaymentBehavior
-    financial_hardship: Optional[FinancialHardship]
+    financial_hardship: Optional[FinancialHardship] = None
 
 
 class BorrowerDirectoryOut(BorrowerDirectoryCreate):

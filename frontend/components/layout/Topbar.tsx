@@ -2,9 +2,11 @@
 
 import styled from "styled-components";
 import { FiBell, FiMoon, FiSun } from "react-icons/fi";
-import { useThemeMode } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
+import {getUserProfile} from "@/app/lib/api/auth.api";
 
 import { useEffect, useState } from "react";
+import { useAuthStore } from "@/store/auth.store";
 
 
 const TopWrapper = styled.div`
@@ -69,44 +71,64 @@ const UserInfo = styled.div`
   }
 `;
 
+type UserProfile = {
+  firstname: string;
+  lastname: string;
+  email: string;
+};
+
 export default function Topbar() {
-  const { mode, toggleTheme } = useThemeMode();
-  const  [user, setUser] = useState<{first_name: string; last_name:string; email: string} | null>(null);
+  const { mode, toggleTheme } = useTheme();
 
 
-useEffect(() => {
-const token = localStorage.getItem("authToken");
-  console.log("TOKEN FROM STORAGE:", token);
-  if (!token) return;
-  getUserProfile(token).then(setUser).catch(console.error);
-}, []);
+  const token = useAuthStore((state) => state.token);
 
-const initials =
-  user
-    ? `${user.first_name[0]}${user.last_name[0]}`.toUpperCase()
-    : "U";
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
 
+const initials = user?.firstname && user?.lastname
+  ? `${user.firstname.charAt(0)}${user.lastname.charAt(0)}`.toUpperCase()
+  : "U";
+
+
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await getUserProfile(token);
+        setUser(profile);
+      } catch (err) {
+        console.error("Failed to fetch user profile:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [token]);
 
   return (
     <TopWrapper>
-      {/* THEME TOGGLE */}
+
       <IconButton onClick={toggleTheme} title="Toggle theme">
-        {mode === "light" ? (
-          <FiMoon size={22} />
-        ) : (
-          <FiSun size={22} />
-        )}
+        {mode === "light" ? <FiMoon size={22} /> : <FiSun size={22} />}
       </IconButton>
 
-      {/* NOTIFICATION */}
+    
       <IconButton>
         <FiBell size={20} />
       </IconButton>
 
-      {/* USER PROFILE */}
       <UserBox>
         <UserInfo>
-           {user ? `${user.first_name} ${user.last_name}` : "Loading..."}
+          <span>
+            {loading
+              ? "Loading..."
+              : user
+              ? `${user.firstname} ${user.lastname}`
+              : "User"}
+          </span>
           <span>{user?.email || ""}</span>
         </UserInfo>
         <Avatar>{initials}</Avatar>

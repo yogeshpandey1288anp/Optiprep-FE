@@ -28,8 +28,8 @@ async def register_user(user: UserCreate):
 
     return {
         "id": str(created_user["_id"]),
-        "first_name": created_user["first_name"],
-        "last_name": created_user["last_name"],
+        "firstname": created_user["firstname"],
+        "lastname": created_user["lastname"],
         "email": created_user["email"],
         "role": created_user["role"],
         "created_at": created_user["created_at"],
