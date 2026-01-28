@@ -12,8 +12,8 @@ class UserRole(str, Enum):
 
 
 class UserBase(BaseModel):
-    first_name: str
-    last_name: str
+    firstname: str
+    lastname: str
     email: EmailStr
     role: UserRole = UserRole.user
     disabled: bool = False
@@ -35,8 +35,8 @@ class UserInDB(UserBase):
 
 class UserResponse(BaseModel):
     id: str
-    first_name: str
-    last_name: str
+    firstname: str
+    lastname: str
     email: EmailStr
     role: UserRole
     created_at: datetime
