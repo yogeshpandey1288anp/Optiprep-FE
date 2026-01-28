@@ -6,7 +6,7 @@ from schema.mdr_schema import (
 )
 from service.mdr_service import DocumentService
 
-router = APIRouter(prefix="/documents", tags=["Documents"])
+router = APIRouter(prefix="/mdr", tags=["MdrData"])
 
 
 @router.post("/", response_model=dict)
@@ -26,7 +26,7 @@ async def get_document(document_id: str):
     return document
 
 
-@router.get("/", response_model=list)
+@router.get("/list", response_model=list)
 async def list_documents():
     documents = await DocumentService.list_documents()
     for doc in documents:
