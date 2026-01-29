@@ -2,6 +2,13 @@
 
 import styled from "styled-components";
 import Card from "./card";
+import { useEffect, useState } from "react";
+import {
+  BorrowerDirectoryOut,
+  getAllDirectorToolData,
+  getDirectorToolData,
+} from "@/app/lib/api/directortool.api";
+import { useRouter } from "next/navigation";
 
 const Title = styled.h3`
   font-size: 15px;
@@ -37,14 +44,14 @@ const Status = styled.span<{ type: string }>`
     type === "Completed"
       ? "#16a34a"
       : type === "On Hold"
-      ? "#dc2626"
-      : "#ca8a04"};
+        ? "#dc2626"
+        : "#ca8a04"};
   background: ${({ type }) =>
     type === "Completed"
       ? "#dcfce7"
       : type === "On Hold"
-      ? "#fee2e2"
-      : "#fef9c3"};
+        ? "#fee2e2"
+        : "#fef9c3"};
 `;
 
 const Link = styled.span`
@@ -53,35 +60,66 @@ const Link = styled.span`
   cursor: pointer;
 `;
 
-const loans = [
-  { id: "4587123698", status: "Pending" },
-  { id: "5728491045", status: "Pending" },
-  { id: "6819304728", status: "On Hold" },
-  { id: "7940158263", status: "Completed" },
-  { id: "8051269374", status: "Completed" },
-];
-
 export default function LoanTodo() {
+  const [loans, setLoans] = useState<BorrowerDirectoryOut[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchLoans = async () => {
+      try {
+        const data = await getAllDirectorToolData();
+        setLoans(data);
+      } catch (error) {
+        console.error("Failed to fetch loan todo list", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLoans();
+  }, []);
+
+  if (loading) {
+    return (
+      <Card>
+        <Title>Loan To-Do List</Title>
+        <p style={{ fontSize: 12, color: "#6b7280" }}>Loading...</p>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <Title>Loan To-Do List</Title>
 
-      {loans.map((l) => (
-        <Item key={l.id}>
-          <Row>
-            <div>
-              <Loan>Loan no.: {l.id}</Loan>
-              <Date>Assigned Date: 11-07-2025</Date>
-            </div>
-            <Status type={l.status}>{l.status}</Status>
-          </Row>
+      {loans.map((l) => {
+        const status =
+          l.loan_account.current_payment_status === "active"
+            ? "In Progress"
+            : "Completed";
 
-          <Row style={{ marginTop: 6 }}>
-            <span />
-            <Link>View Details ↗</Link>
-          </Row>
-        </Item>
-      ))}
+        return (
+          <Item key={l.id}>
+            <Row>
+              <div>
+                <Loan>Loan no.: {l.loan_account.loan_number}</Loan>
+                <Date>Assigned Date: {}</Date>
+              </div>
+              <Status type={status}>{status}</Status>
+            </Row>
+
+            <Row style={{ marginTop: 6 }}>
+              <span />
+              <Link
+                onClick={() => router.push(`/main/loan/${l.external_case_id}`)}
+              >
+                View Details ↗
+              </Link>
+            </Row>
+          </Item>
+        );
+      })}
     </Card>
   );
 }

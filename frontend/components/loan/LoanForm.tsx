@@ -7,63 +7,65 @@ import {
     Input,
 } from "./LoanStyles";
 
-export default function LoanForm() {
+import { BorrowerDetails } from "@/app/lib/api/directortool.api";
+
+export default function LoanForm({ data }: { data?: BorrowerDetails }) {
+    if (!data) {
+        return null;
+    }
+
     return (
         <FormGrid>
             <Field>
                 <Label>Borrower Name</Label>
-                <Input value="Alex Johnson" readOnly />
+                <Input value={data.borrower_name ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Borrower ID / Case ID</Label>
-                <Input value="784512TX" readOnly />
+                <Input value={data.external_borrower_id ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Street Address</Label>
-                <Input value="2457 Maplewood Avenue" readOnly />
+                <Input value={data.street_address ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>City</Label>
-                <Input value="Dallas" readOnly />
+                <Input value={data.city ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>State</Label>
-                <Input value="Texas (TX)" readOnly />
+                <Input value={data.state ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>ZIP Code</Label>
-                <Input value="75204" readOnly />
+                <Input value={data.zip_code ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Borrower Type</Label>
-                <Input value="Individual (Primary Borrower)" readOnly />
+                <Input value={data.borrower_type ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Employment Status</Label>
-                <Input value="Salaried / Full-Time Employed" readOnly />
+                <Input value={data.employment_status ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Company Name</Label>
-                <Input value="Tech Solutions Inc." readOnly />
+                <Input value={data.company_name ?? ""} readOnly />
             </Field>
 
             <Field>
                 <Label>Monthly Income Range</Label>
-                <Input value="$7,000 - $8,000" readOnly />
+                <Input value={data.monthly_income_range ?? ""} readOnly />
             </Field>
 
-            <Field>
-                <Label>Household Size</Label>
-                <Input value="3 Members" readOnly />
-            </Field>
         </FormGrid>
     );
 }

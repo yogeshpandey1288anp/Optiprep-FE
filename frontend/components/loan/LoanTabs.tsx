@@ -58,7 +58,6 @@ export default function LoanTabs({ activeTab, onChange }: Props) {
         </Tab>
       ))}
 
-      {/* 🔥 Sliding underline */}
       <ActiveIndicator ref={indicatorRef} />
     </Tabs>
   );

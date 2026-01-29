@@ -11,10 +11,6 @@ def serialize(doc: dict) -> dict:
 
 
 def normalize_numbers(obj):
-    """
-    Converts Decimal to float with 2 decimal precision
-    (MongoDB safe)
-    """
     if isinstance(obj, Decimal):
         return float(obj.quantize(Decimal("0.00"), rounding=ROUND_HALF_UP))
 
@@ -38,6 +34,13 @@ async def get_by_id(record_id: str) -> Optional[dict]:
 async def get_by_external_case_id(external_case_id: str) -> Optional[dict]:
     doc = await collection.find_one({"external_case_id": external_case_id})
     return serialize(doc) if doc else None
+
+
+async def get_all() -> list[dict]:
+    docs = []
+    async for doc in collection.find():
+        docs.append(serialize(doc))
+    return docs
 
 
 async def create(data: dict) -> dict:

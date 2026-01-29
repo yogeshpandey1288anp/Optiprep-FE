@@ -7,47 +7,60 @@ import {
     Input,
 } from "./LoanStyles";
 
-export default function LoanAccountDetailsForm() {
+import { LoanAccountDetails } from "@/app/lib/api/directortool.api";
+
+export default function LoanAccountDetailsForm({
+  data,
+}: {
+  data?: LoanAccountDetails;
+}) {
+  if (!data)
+    {
+            console.warn("LoanAccountDetailsForm: data is undefined");
+        
+        return null;
+    }
+
     return (
         <FormGrid>
             <Field>
                 <Label>Loan Number</Label>
-                <Input value="4587123698" readOnly />
+                <Input value={data.loan_number} readOnly />
             </Field>
 
             <Field>
                 <Label>Outstanding Principal</Label>
-                <Input value="$325,000" readOnly />
+                <Input value={data.outstanding_principal} readOnly />
             </Field>
 
             <Field>
                 <Label>Interest Rate Type</Label>
-                <Input value="Fixed Rate (5.25% per annum)" readOnly />
+                <Input value={data.interest_rate_type} readOnly />
             </Field>
 
             <Field>
                 <Label>Escrow Balance</Label>
-                <Input value="$2,450" readOnly />
+                <Input value={data.escrow_balance} readOnly />
             </Field>
 
             <Field>
                 <Label>Loan Type</Label>
-                <Input value="FHA" readOnly />
+                <Input value={data.loan_type} readOnly />
             </Field>
 
             <Field>
                 <Label>Delinquency Days</Label>
-                <Input value="Current" readOnly />
+                <Input value={data.delinquency_days} readOnly />
             </Field>
 
             <Field>
                 <Label>Next Payment Due Date</Label>
-                <Input value="09-01-2025" readOnly />
+                <Input value={data.next_payment_due_date} readOnly />
             </Field>
 
             <Field>
                 <Label>Current Payment Status</Label>
-                <Input value="Active" readOnly />
+                <Input value={data.current_payment_status} readOnly />
             </Field>
         </FormGrid>
     );
